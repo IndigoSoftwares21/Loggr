@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-
+using System.Text.RegularExpressions;
 
 namespace Loggr
 {
@@ -114,46 +114,63 @@ namespace Loggr
             try
             {
                 string[] files = Directory.GetFiles(originpathin, "*." + extension, SearchOption.TopDirectoryOnly);
-                newpb.Maximum = files.Length - 1;
-                for (int i = 0; i <= files.Length; i++)
+                if (files.Length > 1)
                 {
-
-
-
-                    try
-                    {
-
-
-
-
-
-                        File.Move(files[i], destinationpathin + "" + Path.GetFileName(files[i]));
-
-                    }
-                    catch (Exception)
-                    {
-
-
-                    }
-                    if (i == files.Length)
-                    {
-                        prog.Refresh();
-                        prog.Text = "Finished";
-                        prog.Refresh();
-                        newpb.Refresh();
-                        newpb.Value = 0;
-                        newpb.Refresh();
-                    }
-                    else
-                    {
-                        prog.Refresh();
-                        prog.Text = "Moving...";
-                        prog.Refresh();
-
-                    }
-
-
+                    newpb.Maximum = files.Length - 1;
                 }
+                else
+                {
+                    newpb.Maximum = 1;
+                }
+
+                if (files.Length > 0)
+                {
+                    for (int i = 0; i <= files.Length; i++)
+                    {
+
+
+
+                        try
+                        {
+
+
+
+
+
+                            File.Move(files[i], destinationpathin + "" + Path.GetFileName(files[i]));
+
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
+                        if (i == files.Length)
+                        {
+                            prog.Refresh();
+                            prog.Text = "Finished";
+                            prog.Refresh();
+                            newpb.Refresh();
+                            newpb.Value = 0;
+                            newpb.Refresh();
+                            MessageBox.Show(files.Length.ToString() + " files have been moved to " + dest_txt.Text, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            prog.Refresh();
+                            prog.Text = "Moving...";
+                            prog.Refresh();
+
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No files found in " + org_txt.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
             }
             catch (Exception)
             {
@@ -174,43 +191,61 @@ namespace Loggr
             try
             {
                 string[] files = Directory.GetFiles(originpathin, "*." + extension, SearchOption.AllDirectories);
-                newpb.Maximum = files.Length - 1;
-                for (int i = 0; i <= files.Length; i++)
+                if (files.Length > 1)
                 {
-                    try
-                    {
-
-
-
-
-                        File.Move(files[i], destinationpathin + "" + Path.GetFileName(files[i]));
-
-                    }
-                    catch (Exception)
-                    {
-
-
-                    }
-
-                    if (i == files.Length)
-                    {
-                        prog.Refresh();
-                        prog.Text = "Finished";
-                        prog.Refresh();
-                        newpb.Refresh();
-                        newpb.Value = 0;
-                        newpb.Refresh();
-                    }
-                    else
-                    {
-                        prog.Refresh();
-                        prog.Text = "Moving...";
-                        prog.Refresh();
-
-                    }
-
-
+                    newpb.Maximum = files.Length - 1;
                 }
+                else
+                {
+                    newpb.Maximum = 1;
+                }
+
+                if (files.Length > 0)
+                {
+                    for (int i = 0; i <= files.Length; i++)
+                    {
+                        try
+                        {
+
+
+
+
+                            File.Move(files[i], destinationpathin + "" + Path.GetFileName(files[i]));
+
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
+
+                        if (i == files.Length)
+                        {
+                            prog.Refresh();
+                            prog.Text = "Finished";
+                            prog.Refresh();
+                            newpb.Refresh();
+                            newpb.Value = 0;
+                            newpb.Refresh();
+                            MessageBox.Show(files.Length.ToString() + " files have been moved to " + dest_txt.Text, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            prog.Refresh();
+                            prog.Text = "Moving...";
+                            prog.Refresh();
+
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No files found in " + org_txt.Text,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                }
+
+                
             }
             catch (Exception)
             {
@@ -239,11 +274,20 @@ namespace Loggr
             try
             {
                 string[] files = Directory.GetFiles(originpathin, "*." + extension, SearchOption.TopDirectoryOnly);
-                newpb.Maximum = files.Length - 1;
-                for (int i = 0; i <= files.Length; i++)
+                if (files.Length > 1)
                 {
-                    try
+                    newpb.Maximum = files.Length - 1;
+                }else
+                {
+                    newpb.Maximum = 1;
+                }
+              
+                if (files.Length > 0)
+                {
+                    for (int i = 0; i <= files.Length; i++)
                     {
+                        try
+                        {
 
 
 
@@ -251,33 +295,39 @@ namespace Loggr
 
 
 
-                        File.Copy(files[i], destinationpathin + "" + Path.GetFileName(files[i]), overwitebool);
+                            File.Copy(files[i], destinationpathin + "" + Path.GetFileName(files[i]), overwitebool);
 
-                        newpb.Value++;
+                            newpb.Value++;
 
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
+
+                        if (i == files.Length)
+                        {
+                            prog.Refresh();
+                            prog.Text = "Finished";
+                            prog.Refresh();
+                            newpb.Refresh();
+                            newpb.Value = 0;
+                            newpb.Refresh();
+                            MessageBox.Show(files.Length.ToString() + " files have been copied to " + dest_txt.Text, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            prog.Refresh();
+                            prog.Text = "Copying...";
+                            prog.Refresh();
+
+                        }
                     }
-                    catch (Exception)
-                    {
-
-
-                    }
-
-                    if (i == files.Length)
-                    {
-                        prog.Refresh();
-                        prog.Text = "Finished";
-                        prog.Refresh();
-                        newpb.Refresh();
-                        newpb.Value = 0;
-                        newpb.Refresh();
-                    }
-                    else
-                    {
-                        prog.Refresh();
-                        prog.Text = "Copying...";
-                        prog.Refresh();
-
-                    }
+                }
+                else
+                {
+                    MessageBox.Show("No files found in " + org_txt.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 
@@ -309,40 +359,55 @@ namespace Loggr
             try
             {
                 string[] files = Directory.GetFiles(originpathin, "*." + extension, SearchOption.AllDirectories);
-                newpb.Maximum = files.Length - 1;
-                for (int i = 0; i <= files.Length; i++)
+                if (files.Length > 1)
                 {
-                    try
+                    newpb.Maximum = files.Length - 1;
+                }
+                else
+                {
+                    newpb.Maximum = 1;
+                }
+
+                if (files.Length > 0) {
+                    for (int i = 0; i <= files.Length; i++)
                     {
+                        try
+                        {
 
 
 
 
 
-                        File.Copy(files[i], destinationpathin + "" + Path.GetFileName(files[i]), overwitebool);
-                        newpb.Value++;
+                            File.Copy(files[i], destinationpathin + "" + Path.GetFileName(files[i]), overwitebool);
+                            newpb.Value++;
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
+                        if (i == files.Length)
+                        {
+                            prog.Refresh();
+                            prog.Text = "Finished";
+                            prog.Refresh();
+                            newpb.Refresh();
+                            newpb.Value = 0;
+                            newpb.Refresh();
+                            MessageBox.Show(files.Length.ToString() + " files have been copied to " + dest_txt.Text, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            prog.Refresh();
+                            prog.Text = "Copying...";
+                            prog.Refresh();
+
+                        }
                     }
-                    catch (Exception)
-                    {
-
-
-                    }
-                    if (i == files.Length)
-                    {
-                        prog.Refresh();
-                        prog.Text = "Finished";
-                        prog.Refresh();
-                        newpb.Refresh();
-                        newpb.Value = 0;
-                        newpb.Refresh();
-                    }
-                    else
-                    {
-                        prog.Refresh();
-                        prog.Text = "Copying...";
-                        prog.Refresh();
-
-                    }
+                }
+                else
+                {
+                    MessageBox.Show("No files found in " + org_txt.Text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception)
@@ -509,27 +574,189 @@ namespace Loggr
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
-            if (includesubfolders.Checked)
+            if (org_txt.Text != "" && dest_txt.Text != "")
             {
-                transferActionall();
+                if(org_txt.Text!=dest_txt.Text)
+                {
+                    if (includesubfolders.Checked)
+                    {
+                        if (org_txt.Text != "")
+                        {
+                            if (Regex.IsMatch(org_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                            {
+                                if (dest_txt.Text != "")
+                                {
+                                    if (Regex.IsMatch(dest_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                                    {
+                                        transferActionall();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(dest_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please Input Destination Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
+
+                            }
+                            else
+                            {
+                                MessageBox.Show(org_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("Please Input Origin Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        if (org_txt.Text != "")
+                        {
+                            if (Regex.IsMatch(org_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                            {
+                                if (dest_txt.Text != "")
+                                {
+                                    if (Regex.IsMatch(dest_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                                    {
+                                        transferAction();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(dest_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please Input Destination Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
+
+                            }
+                            else
+                            {
+                                MessageBox.Show(org_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("Please Input Origin Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Origin path and destination path cannot be thesame", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            else if (org_txt.Text == "")
             {
-                transferAction();
+                MessageBox.Show("Origin Path cannot be blank.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else if(dest_txt.Text =="")
+            {
+                MessageBox.Show("Destination path cannot be blank.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
         }
 
         private void copybtn_Click(object sender, EventArgs e)
         {
+            if(org_txt.Text!="" && dest_txt.Text != "")
+            {
+                if (org_txt.Text != dest_txt.Text)
+                {
+                    if (includesubfolders.Checked)
+                    {
+                        if (org_txt.Text != "")
+                        {
+                            if (Regex.IsMatch(org_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                            {
+                                if (dest_txt.Text != "")
+                                {
+                                    if (Regex.IsMatch(dest_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                                    {
+                                        copyActionall();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(dest_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please Input Destination Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
 
-            if (includesubfolders.Checked)
-            {
-                copyActionall();
+
+                            }
+                            else
+                            {
+                                MessageBox.Show(org_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("Please Input Origin Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        if (org_txt.Text != "")
+                        {
+                            if (Regex.IsMatch(org_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                            {
+                                if (dest_txt.Text != "")
+                                {
+                                    if (Regex.IsMatch(dest_txt.Text, @"(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:""/\\|?*])|\/(?![\0-\37<>:""/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:""/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:""/\\|?*]+))((\\|\/)[^\0-\37<>:""/\\|?*]+|(\\|\/)$)*()$"))
+                                    {
+                                        copyAction();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(dest_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please Input Destination Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
+
+                            }
+                            else
+                            {
+                                MessageBox.Show(org_txt.Text + " is not a valid file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("Please Input Origin Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Origin path and destination path cannot be thesame", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            else if (org_txt.Text == "")
             {
-                copyAction();
+                MessageBox.Show("Origin Path cannot be blank.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else if (dest_txt.Text == "")
+            {
+                MessageBox.Show("Destination path cannot be blank.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void guna2Button1_Click(object sender, EventArgs e)
@@ -575,7 +802,7 @@ namespace Loggr
 
         private void howtouse_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://www.loggr.orjiude.com/docs");
+            Process.Start("https://loggrapp.netlify.app/docs");
         }
 
         private void feedback_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
