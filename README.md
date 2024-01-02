@@ -1,2 +1,2 @@
 # Loggr
-This is a windows app built with c£ that allows you organise your pc files efficiently.
+This is a windows app built with c# that allows you organize your pc files efficiently.
